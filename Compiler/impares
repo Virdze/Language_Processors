@@ -1,0 +1,14 @@
+int i, count = 0;
+int seq[5] = [1, 2, 3, 4, 5];
+
+main() {
+    write("Sequencia: ");
+    while(i < 5) {
+        seq[i] = read("Numero: ");
+        if ((seq[i] % 2) == 1) { count = count + 1; }
+        i = i + 1;
+    }
+    write("Numero de elementos impares = ");
+    write(count);
+}
+

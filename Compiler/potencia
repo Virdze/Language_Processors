@@ -1,0 +1,16 @@
+int e, b;
+int i, res;
+
+def potencia() {
+    i = 0, res = 1;
+    while(i < e) { res = res * b; }
+}
+
+main() {
+    b = read("Base: ");
+    e = read("Expoente: ");
+    potencia();
+    write("Resultado = ");
+    write(res);
+}
+

@@ -1,0 +1,90 @@
+prog : declrs funcs main
+  | declrs main      
+
+main : MAIN '{' instrs '}'    
+
+funcs : START VOID ID START instrs END funcs   #tenho de ver estas
+      | VOID ID START instrs END funcs         #
+                               
+instrs : instrs instr   
+           
+instr : atr    
+      | write   
+      | cond   
+      | cycle  
+      | fcall  
+
+fcall : ID '(' ')' ';'    #pode levar args?
+
+#cycle : FOR '(' ID ',' expr ',' expr ')' START instrs END                  
+#      | FOR '(' ID ',' expr ',' expr ',' expr ')' START instrs END         
+#      | FOR '(' ID ',' ID ')' '-' '>' ID START instrs END                      
+#      | FOR '(' ID '=' expr ',' expr ',' ID '=' expr ')' START instrs END  
+
+cond : IF '(' expr ')' '{' instrs '}'                          
+     | IF '(' expr ')' '{' instrs '}' ELSE '{' instrs '}'  
+     | IF '(' expr ')' '{' instrs '}' ELSE cond              
+
+write : WRITE '(' string ')' ';' 
+
+read : READ '(' string ')' ';'
+
+string : #FSS fstring '"'    ## q é isto????
+       | STR                
+
+#fstring : fstring '{' expr '}'   
+#        | fstring FSTR           
+#        | '{' expr '}'           
+#        | FSTR                   
+
+atr : ID '=' expr             
+    | ID '=' read                 
+    | ID '[' expr ']' '=' expr
+    | ID '[' expr ']' '=' read
+
+declrs : declrs declr   
+       |                 #isto é para se n existirem??
+
+declr : INT decllist      
+      | '\n'                     
+
+decllist : singdecl ',' decllist  #pq é q aqui n é recursividade à esquerda???
+         | singdecl        
+
+singdecl : ID ';'                           
+         | ID '[' NUM ']' ';'                
+         | ID '=' expr ';'               
+         | ID '=' read ';'                       
+         | ID '[' NUM ']' '=' '[' list ']' ';'   
+
+list : expr ',' list       
+     | expr                 
+
+expr : expr AND lexpr   
+     | expr OR lexpr     
+     | NOT lexpr     
+     | lexpr            
+
+lexpr : lexpr EQ arithm   
+      | lexpr NEQ arithm  
+      | lexpr GE arithm  
+      | lexpr LE arithm 
+      | lexpr '>' arithm    
+      | lexpr '<' arithm    
+      | arithm              
+
+arithm : arithm '+' term    
+       | arithm '-' term    
+       | term               
+
+term : term '*' par    
+     | term '/' par    
+     | term '%' par    
+     | par             
+
+par : '(' expr ')'        
+    | factor              
+
+factor : NUM                    
+       | ID                     
+       | ID '[' expr ']'

@@ -1,0 +1,13 @@
+int N = read("Quantos numeros a ler? ");
+i, res, tmp;
+
+main() {
+    i = 0, res = read("Numero: ");
+    while(i < N - 1) {
+        tmp = read("Numero: ");
+        if (tmp < res) { res = tmp; }
+    }
+    write("Menor numero = ");
+    write(res);
+}
+

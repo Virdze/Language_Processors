@@ -1,0 +1,20 @@
+int i;
+int res;
+int quadrado[4];
+
+main() {
+    i = 0, res = 0;
+    while(i < 4) {
+        quadrado[i] = read("Numero: ");
+        if (i > 0) {
+            if (quadrado[i] != quadrado[i - 1]) { res = -1; }
+        }
+        i = i + 1;
+    }
+    
+    if (res == 0) {
+        write("Sao os lados de um quadrado");
+    } else {
+        write("Nao sao os lados de um quadrado");
+    }
+}
